@@ -54,5 +54,17 @@ class install {
 		"pip-packages":
 			command => "pip install ftp-cloudfs python-keystoneclient python-swiftclient",
 			require => Package["python-pip"];
+		
+		# clone freebayes
+		"freebayes-clone":
+			command => "git clone --recursive https://github.com/ekg/freebayes.git",
+			cwd     => "/usr/local/src",
+			creates => "/usr/local/src/freebayes/Makefile",
+			require => Packages["git", "make", "cmake"];
+		"freebayes-make":
+			command => "make install",
+			cwd     => "/usr/local/src/freebayes",
+			creates => "/usr/local/bin/freebayes",
+			require => Exec["freebayes-clone"];
 	}
 }
