@@ -75,3 +75,7 @@ class install {
 			require => Package["git"];
 	}
 }
+
+class { 'install':
+	stage => main,
+}
