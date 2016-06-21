@@ -60,11 +60,18 @@ class install {
 			command => "git clone --recursive https://github.com/ekg/freebayes.git",
 			cwd     => "/usr/local/src",
 			creates => "/usr/local/src/freebayes/Makefile",
-			require => Packages["git", "make", "cmake"];
+			require => Package["git", "make", "cmake"];
 		"freebayes-make":
 			command => "make install",
 			cwd     => "/usr/local/src/freebayes",
 			creates => "/usr/local/bin/freebayes",
 			require => Exec["freebayes-clone"];
+		
+		# clone apexomes
+		"apexomes-clone":
+			command => "git clone https://github.com/naturalis/apexomes.git",
+			cwd     => "/home/ubuntu",
+			creates => "/home/ubuntu/apexomes",
+			require => Package["git"];
 	}
 }
