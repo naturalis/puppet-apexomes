@@ -84,6 +84,23 @@ class install {
 			creates => "/usr/local/bin/freebayes",
 			require => Exec["freebayes-make"];
 		
+		# install plink
+		"plink-wget":
+			command => "wget http://pngu.mgh.harvard.edu/~purcell/plink/dist/plink-1.07-x86_64.zip",
+			cwd     => "/usr/local/src",
+			creates => "/usr/local/src/plink-1.07-x86_64.zip",
+			require => Package["wget"];
+		"plink-unzip":
+			command => "unzip plink-1.07-x86_64.zip",
+			cwd     => "/usr/local/src",
+			creates => "/usr/local/src/plink-1.07-x86_64/plink",
+			require => Exec["plink-wget"];
+		"plink-symlink":
+			command => "ln -s /usr/local/src/plink-1.07-x86_64/plink /usr/local/bin/plink",
+			cwd     => "/usr/local/src/plink-1.07-x86_64/",
+			creates => "/usr/local/bin/plink",
+			require => Exec["plink-unzip"];
+		
 		# clone apexomes
 		"apexomes-clone":
 			command => "git clone https://github.com/naturalis/apexomes.git",
