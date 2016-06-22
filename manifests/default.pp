@@ -22,18 +22,19 @@ class install {
 
 	# install packages.
 	package {
-		"git":        ensure => installed, require => Exec["apt_update"];
-		"make":       ensure => installed, require => Exec["apt_update"];
-		"gcc":        ensure => installed, require => Exec["apt_update"];
-		"zlib1g-dev": ensure => installed, require => Exec["apt_update"];
-		"python-pip": ensure => installed, require => Exec["apt_update"];
-		"python-dev": ensure => installed, require => Exec["apt_update"];
-		"bwa":        ensure => installed, require => Exec["apt_update"];
-		"samtools":   ensure => installed, require => Exec["apt_update"];
-		"cmake":      ensure => installed, require => Exec["apt_update"];
-		"unzip":      ensure => installed, require => Exec["apt_update"];
-		"wget":       ensure => installed, require => Exec["apt_update"];
-		"vcftools":   ensure => installed, require => Exec["apt_update"];
+		"git":         ensure => installed, require => Exec["apt_update"];
+		"make":        ensure => installed, require => Exec["apt_update"];
+		"gcc":         ensure => installed, require => Exec["apt_update"];
+		"zlib1g-dev":  ensure => installed, require => Exec["apt_update"];
+		"python-pip":  ensure => installed, require => Exec["apt_update"];
+		"python-dev":  ensure => installed, require => Exec["apt_update"];
+		"bwa":         ensure => installed, require => Exec["apt_update"];
+		"samtools":    ensure => installed, require => Exec["apt_update"];
+		"cmake":       ensure => installed, require => Exec["apt_update"];
+		"unzip":       ensure => installed, require => Exec["apt_update"];
+		"wget":        ensure => installed, require => Exec["apt_update"];
+		"vcftools":    ensure => installed, require => Exec["apt_update"];
+		"ncbi-blast+": ensure => installed, require => Exec["apt_update"];
 	}
   
 	# additional install tasks
