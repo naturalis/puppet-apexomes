@@ -28,25 +28,32 @@ class install {
 		"bwa":        ensure => installed, require => Exec ["apt_update"];
 		"samtools":   ensure => installed, require => Exec ["apt_update"];
 		"cmake":      ensure => installed, require => Exec ["apt_update"];
+		"unzip":      ensure => installed, require => Exec ["apt_update"];
+		"wget":       ensure => installed, require => Exec ["apt_update"];
 	}
   
 	# additional install tasks
 	exec {
 		
 		# install the sickle trimmer tool
-		"sickle-clone":
-			command => "git clone https://github.com/najoshi/sickle.git",
+		"sickle-wget":
+			command => "wget https://github.com/najoshi/sickle/archive/v1.33.zip",
 			cwd     => "/usr/local/src",
-			creates => "/usr/local/src/sickle/Makefile",
-			require => Package["git", "make", "zlib1g-dev"];
+			creates => "/usr/local/src/sickle-1.33.zip",
+			require => Package["wget", "unzip", "make", "zlib1g-dev"];
+		"sickle-unzip":
+			command => "unzip sickle-1.33.zip",
+			cwd     => "/usr/local/src",
+			creates => "/usr/local/src/sickle-1.33/Makefile",
+			require => Exec["sickle-wget"];
 		"sickle-make":
 			command => "make",
-			cwd     => "/usr/local/src/sickle",
-			creates => "/usr/local/src/sickle/sickle",
-			require => Exec["sickle-clone"];
+			cwd     => "/usr/local/src/sickle-1.33",
+			creates => "/usr/local/src/sickle-1.33/sickle",
+			require => Exec["sickle-unzip"];
 		"sickle-symlink":
-			command => "ln -s /usr/local/src/sickle/sickle /usr/local/bin/sickle",
-			cwd     => "/usr/local/src/sickle",
+			command => "ln -s /usr/local/src/sickle-1.33/sickle /usr/local/bin/sickle",
+			cwd     => "/usr/local/src/sickle-1.33",
 			creates => "/usr/local/bin/sickle",
 			require => Exec["sickle-make"];
 			
@@ -55,20 +62,25 @@ class install {
 			command => "pip install ftp-cloudfs python-keystoneclient python-swiftclient",
 			require => Package["python-pip", "python-dev"];
 		
-		# clone freebayes
-		"freebayes-clone":
-			command => "git clone --recursive https://github.com/ekg/freebayes.git",
+		# install freebayes
+		"freebayes-wget":
+			command => "wget https://github.com/ekg/freebayes/archive/v1.0.2.zip",
 			cwd     => "/usr/local/src",
-			creates => "/usr/local/src/freebayes/Makefile",
-			require => Package["git", "make", "cmake"];
+			creates => "/usr/local/src/freebayes-1.0.2.zip",
+			require => Package["make", "cmake", "wget", "unzip"];
+		"freebayes-unzip":
+			command => "unzip freebayes-1.0.2.zip",
+			cwd     => "/usr/local/src",
+			creates => "/usr/local/src/freebayes-1.0.2/Makefile",
+			require => Exec["freebayes-wget"];
 		"freebayes-make":
 			command => "make",
-			cwd     => "/usr/local/src/freebayes",
-			creates => "/usr/local/src/freebase/bin/freebayes",
-			require => Exec["freebayes-clone"];
+			cwd     => "/usr/local/src/freebayes-1.0.2",
+			creates => "/usr/local/src/freebayes-1.0.2/bin/freebayes",
+			require => Exec["freebayes-unzip"];
 		"freebayes-install":
 			command => "make install",
-			cwd     => "/usr/local/src/freebayes",
+			cwd     => "/usr/local/src/freebayes-1.0.2",
 			creates => "/usr/local/bin/freebayes",
 			require => Exec["freebayes-make"];
 		
