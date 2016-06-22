@@ -62,10 +62,15 @@ class install {
 			creates => "/usr/local/src/freebayes/Makefile",
 			require => Package["git", "make", "cmake"];
 		"freebayes-make":
+			command => "make",
+			cwd     => "/usr/local/src/freebayes",
+			creates => "/usr/local/src/freebase/bin/freebayes",
+			require => Exec["freebayes-clone"];
+		"freebayes-install":
 			command => "make install",
 			cwd     => "/usr/local/src/freebayes",
 			creates => "/usr/local/bin/freebayes",
-			require => Exec["freebayes-clone"];
+			require => Exec["freebayes-make"];
 		
 		# clone apexomes
 		"apexomes-clone":
