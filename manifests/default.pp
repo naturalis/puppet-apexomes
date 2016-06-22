@@ -66,24 +66,23 @@ class install {
 			require => Package["python-pip", "python-dev"];
 		
 		# install freebayes
-		"freebayes-wget":
-			command => "wget -O freebayes-1.0.2.zip https://github.com/ekg/freebayes/archive/v1.0.2.zip",
+		"freebayes-clone":
+			command => "git clone --recursive https://github.com/ekg/freebayes.git",
 			cwd     => "/usr/local/src",
-			creates => "/usr/local/src/freebayes-1.0.2.zip",
-			require => Package["make", "cmake", "wget", "unzip"];
-		"freebayes-unzip":
-			command => "unzip freebayes-1.0.2.zip",
-			cwd     => "/usr/local/src",
-			creates => "/usr/local/src/freebayes-1.0.2/Makefile",
-			require => Exec["freebayes-wget"];
+			creates => "/usr/local/src/freebayes",
+			require => Package["make", "cmake", "git"];
+		"freebayes-checkout":
+			command => "git checkout tags/v1.0.2",
+			cwd     => "/usr/local/src/freebayes",
+			require => Exec["freebayes-clone"];
 		"freebayes-make":
 			command => "make",
-			cwd     => "/usr/local/src/freebayes-1.0.2",
-			creates => "/usr/local/src/freebayes-1.0.2/bin/freebayes",
-			require => Exec["freebayes-unzip"];
+			cwd     => "/usr/local/src/freebayes",
+			creates => "/usr/local/src/freebayes/bin/freebayes",
+			require => Exec["freebayes-checkout"];
 		"freebayes-install":
 			command => "make install",
-			cwd     => "/usr/local/src/freebayes-1.0.2",
+			cwd     => "/usr/local/src/freebayes",
 			creates => "/usr/local/bin/freebayes",
 			require => Exec["freebayes-make"];
 		
