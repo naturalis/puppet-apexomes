@@ -23,6 +23,7 @@ class install {
 	# install packages.
 	package {
 		"git":         ensure => installed, require => Exec["apt_update"];
+		"git-annex":   ensure => installed, require => Exec["apt_update"];
 		"make":        ensure => installed, require => Exec["apt_update"];
 		"gcc":         ensure => installed, require => Exec["apt_update"];
 		"zlib1g-dev":  ensure => installed, require => Exec["apt_update"];
