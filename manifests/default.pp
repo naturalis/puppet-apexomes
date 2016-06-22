@@ -40,7 +40,7 @@ class install {
 		
 		# install the sickle trimmer tool
 		"sickle-wget":
-			command => "wget https://github.com/najoshi/sickle/archive/v1.33.zip",
+			command => "wget -O sickle-1.33.zip https://github.com/najoshi/sickle/archive/v1.33.zip",
 			cwd     => "/usr/local/src",
 			creates => "/usr/local/src/sickle-1.33.zip",
 			require => Package["wget", "unzip", "make", "zlib1g-dev"];
@@ -67,7 +67,7 @@ class install {
 		
 		# install freebayes
 		"freebayes-wget":
-			command => "wget https://github.com/ekg/freebayes/archive/v1.0.2.zip",
+			command => "wget -O freebayes-1.0.2.zip https://github.com/ekg/freebayes/archive/v1.0.2.zip",
 			cwd     => "/usr/local/src",
 			creates => "/usr/local/src/freebayes-1.0.2.zip",
 			require => Package["make", "cmake", "wget", "unzip"];
