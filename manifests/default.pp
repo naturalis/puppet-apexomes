@@ -38,7 +38,7 @@ class install {
 			command => "git clone https://github.com/najoshi/sickle.git",
 			cwd     => "/usr/local/src",
 			creates => "/usr/local/src/sickle/Makefile",
-			require => Package["git", "make"];
+			require => Package["git", "make", "zlib1g-dev"];
 		"sickle-make":
 			command => "make",
 			cwd     => "/usr/local/src/sickle",
