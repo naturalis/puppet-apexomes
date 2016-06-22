@@ -1,6 +1,3 @@
 # puppet-apexomes
-puppet manifest for the apexomes analysis environment
-As yet untested. What we need to check is:
-
-1. whether this is syntactically as well as logically correct
-2. whether we indeed are aware of all dependencies for apexomes
+puppet manifest for the apexomes analysis environment. synchronized with the dependencies of 
+http://github.com/naturalis/apexomes as of that repo's commit 290718364adeb4aa4419c4bdb79e08580cc3c7fa
