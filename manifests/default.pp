@@ -22,17 +22,17 @@ class install {
 
 	# install packages.
 	package {
-		"git":        ensure => installed, require => Exec ["apt_update"];
-		"make":       ensure => installed, require => Exec ["apt_update"];
-		"gcc":        ensure => installed, require => Exec ["apt_update"];
-		"zlib1g-dev": ensure => installed, require => Exec ["apt_update"];
-		"python-pip": ensure => installed, require => Exec ["apt_update"];
-		"python-dev": ensure => installed, require => Exec ["apt_update"];
-		"bwa":        ensure => installed, require => Exec ["apt_update"];
-		"samtools":   ensure => installed, require => Exec ["apt_update"];
-		"cmake":      ensure => installed, require => Exec ["apt_update"];
-		"unzip":      ensure => installed, require => Exec ["apt_update"];
-		"wget":       ensure => installed, require => Exec ["apt_update"];
+		"git":        ensure => installed, require => Exec["apt_update"];
+		"make":       ensure => installed, require => Exec["apt_update"];
+		"gcc":        ensure => installed, require => Exec["apt_update"];
+		"zlib1g-dev": ensure => installed, require => Exec["apt_update"];
+		"python-pip": ensure => installed, require => Exec["apt_update"];
+		"python-dev": ensure => installed, require => Exec["apt_update"];
+		"bwa":        ensure => installed, require => Exec["apt_update"];
+		"samtools":   ensure => installed, require => Exec["apt_update"];
+		"cmake":      ensure => installed, require => Exec["apt_update"];
+		"unzip":      ensure => installed, require => Exec["apt_update"];
+		"wget":       ensure => installed, require => Exec["apt_update"];
 	}
   
 	# additional install tasks
@@ -71,15 +71,11 @@ class install {
 			cwd     => "/usr/local/src",
 			creates => "/usr/local/src/freebayes",
 			require => Package["make", "cmake", "git"];
-		"freebayes-checkout":
-			command => "git checkout tags/v1.0.2",
-			cwd     => "/usr/local/src/freebayes",
-			require => Exec["freebayes-clone"];
 		"freebayes-make":
 			command => "make",
 			cwd     => "/usr/local/src/freebayes",
 			creates => "/usr/local/src/freebayes/bin/freebayes",
-			require => Exec["freebayes-checkout"];
+			require => Exec["freebayes-clone"];
 		"freebayes-install":
 			command => "make install",
 			cwd     => "/usr/local/src/freebayes",
