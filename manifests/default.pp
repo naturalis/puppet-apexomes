@@ -10,6 +10,9 @@ Exec {
 	] 
 }
 
+# disable timeout for all provisioning operations
+Exec { timeout => 0 }
+
 class install {
 
 	# keep package information up to date
