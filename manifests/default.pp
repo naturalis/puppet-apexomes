@@ -70,8 +70,8 @@ class install {
 		# clone apexomes
 		"apexomes-clone":
 			command => "git clone https://github.com/naturalis/apexomes.git",
-			cwd     => "/home/ubuntu",
-			creates => "/home/ubuntu/apexomes",
+			cwd     => "/usr/local/src",
+			creates => "/usr/local/src/apexomes",
 			require => Package["git"];
 	}
 }
