@@ -53,7 +53,7 @@ class install {
 		# install pip packages
 		"pip-packages":
 			command => "pip install ftp-cloudfs python-keystoneclient python-swiftclient",
-			require => Package["python-pip"];
+			require => Package["python-pip", "python-dev"];
 		
 		# clone freebayes
 		"freebayes-clone":
