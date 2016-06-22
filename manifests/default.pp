@@ -33,6 +33,7 @@ class install {
 		"cmake":      ensure => installed, require => Exec["apt_update"];
 		"unzip":      ensure => installed, require => Exec["apt_update"];
 		"wget":       ensure => installed, require => Exec["apt_update"];
+		"vcftools":   ensure => installed, require => Exec["apt_update"];
 	}
   
 	# additional install tasks
